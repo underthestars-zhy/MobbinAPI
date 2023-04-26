@@ -2,10 +2,12 @@ import XCTest
 @testable import MobbinAPI
 
 final class MobbinAPITests: XCTestCase {
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(MobbinAPI().text, "Hello, World!")
+    func testShouldUsePassword() async throws {
+        let res = try await MobbinAPI(email: "zhuhaoyu0909@icloud.com").shoudUsePassword()
+        XCTAssertFalse(res)
+    }
+
+    func testSendEmail() async throws {
+        try await MobbinAPI(email: "zhuhaoyu0909@icloud.com").sendEmail()
     }
 }
