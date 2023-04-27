@@ -6,8 +6,9 @@ public class MobbinAPI {
     var token: Token? = nil
     var userInfo: UserInfo? = nil
 
-    init(email: String) {
+    init(email: String, token: Token? = nil) {
         self.email = email
+        self.token = token
     }
 
     init(userInfo: UserInfo) {

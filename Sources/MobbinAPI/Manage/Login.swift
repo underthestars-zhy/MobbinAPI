@@ -10,7 +10,7 @@ import SwiftyJSON
 
 extension MobbinAPI {
     func shoudUsePassword() async throws -> Bool {
-        guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_should_use_password_for_email") else { throw NSError() }
+        guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_should_use_password_for_email") else { throw HTTPError.wrongUrlFormat }
         var request = URLRequest(url: URL)
         request.httpMethod = "POST"
 
@@ -44,16 +44,16 @@ extension MobbinAPI {
         let (data, response) = try await URLSession.shared.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NSError()
+            throw HTTPError.badResponse
         }
 
         return try JSONDecoder().decode(Bool.self, from: data)
     }
 
     func sendEmail() async throws {
-        guard try await !shoudUsePassword() else { throw NSError() }
+        guard try await !shoudUsePassword() else { throw MobbinError.emailProblem }
 
-        guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/auth/v1/otp") else {return}
+        guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/auth/v1/otp") else { throw HTTPError.wrongUrlFormat }
         var request = URLRequest(url: URL)
         request.httpMethod = "POST"
 
@@ -86,12 +86,12 @@ extension MobbinAPI {
         let (_, response) = try await URLSession.shared.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NSError()
+            throw HTTPError.badResponse
         }
     }
 
     func verify(code: String) async throws -> Bool {
-        guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/auth/v1/verify") else { return false }
+        guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/auth/v1/verify") else { throw HTTPError.wrongUrlFormat }
         var request = URLRequest(url: URL)
         request.httpMethod = "POST"
 
@@ -124,7 +124,7 @@ extension MobbinAPI {
         let (data, response) = try await URLSession.shared.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            return false
+            throw HTTPError.badResponse
         }
 
         let json = try JSON(data: data)

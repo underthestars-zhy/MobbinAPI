@@ -31,16 +31,9 @@ struct UserInfo {
     }
 
     init?(id: String, aud: String, role: String, email: String, emailConfirmedAt: String, recoverySentAt: String, lastSignInAt: String, avatarUrl: String, fullName: String) {
-
-        func convertToDate(_ dateString: String) -> Date? {
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            return formatter.date(from: dateString)
-        }
-
-        guard let emailConfirmedAt = convertToDate(emailConfirmedAt) else { return nil }
-        guard let recoverySentAt = convertToDate(recoverySentAt) else { return nil }
-        guard let lastSignInAt = convertToDate(lastSignInAt) else { return nil }
+        guard let emailConfirmedAt = Date.create(login: emailConfirmedAt) else { return nil }
+        guard let recoverySentAt =  Date.create(login: recoverySentAt) else { return nil }
+        guard let lastSignInAt =  Date.create(login: lastSignInAt) else { return nil }
         guard let avatarUrl = URL(string: avatarUrl) else { return nil }
 
         self.id = id
