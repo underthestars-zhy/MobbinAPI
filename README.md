@@ -34,7 +34,7 @@ let mobbinAPI = MobbinAPI(userInfo: UserInfo(...), token: Token(...))
 
 ```swift
 struct UserInfo {
-    ...
+...
 }
 ```
 
@@ -74,7 +74,7 @@ After a successful login, MobbinAPI can obtain a token, which will be used in al
 
 ```swift
 struct Token {
-    ...
+...
 }
 ```
 
@@ -122,7 +122,7 @@ let iOSAppsCount = try await mobbinAPI.iOSAppsCount
 
 ```swift
 struct App {
-    ....
+....
 }
 ```
 
@@ -169,7 +169,7 @@ Mobbin can provide all the screens snapshots of the app.
 
 ```swift
 struct Screen {
-    ....
+....
 }
 ```
 
@@ -196,7 +196,7 @@ Mobbin can provide the entire flows of the app, which consists of a series of sc
 
 ```swift
 struct Flow {
-    ....
+....
 }
 ```
 
@@ -213,10 +213,10 @@ struct Flow {
 
 ```swift
 struct Flow {
-    ...
-    struct Screen {
-        ....
-    }
+...
+struct Screen {
+....
+}
 }
 ```
 
@@ -254,3 +254,61 @@ Will support in the future.
 ## Collection
 
 MobbinAPI supports **full control** over an account's collections.
+
+### Platforms Count
+
+Platform count refers to the number of screens or flows in a particular collection's platform.
+
+```swift
+let platfrom = try await api.platformCount(of: Collection(...))
+```
+
+### Query Collection
+
+```swift
+let collections = try await api.queryCollections()
+```
+
+### Delete Collection
+
+```swift
+try await api.delete(collection: Collection(...))
+```
+
+### Create Collection
+
+```swift
+let workspace = try await api.fetchWorkspace()
+
+try await api.createCollection(in: workspace, name: "...", description: "...")
+```
+
+### Eidt Collection
+
+```swift
+let newCollection = try await api.edit(collection: collection, name: "...", description: "...")
+```
+
+### Apps in the Collection
+
+The following method can fetch apps in collections. The result is a `Collection.App` structure, which is almost the same as the normal `App` structure.
+
+```swift
+let apps = try await api.queryApps(in: Collection(...))
+```
+
+### Screens in the Collection
+
+The following method can fetch screens in collections. The result is a `Collection.Screen` structure, which is almost the same as the normal `Screen` structure.
+
+```swift
+let apps = try await api.queryScreens(in: Collection(...))
+```
+
+### Flows in the Collection
+
+The following method can fetch flows in collections. The result is a `Collection.Flow` structure, which is almost the same as the normal `Flow` structure.
+
+```swift
+let apps = try await api.queryFlows(in: Collection(...))
+```
