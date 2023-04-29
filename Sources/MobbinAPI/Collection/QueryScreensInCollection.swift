@@ -1,5 +1,5 @@
 //
-//  QueryAppsInCollection.swift
+//  QueryScreensInCollection.swift
 //  
 //
 //  Created by 朱浩宇 on 2023/4/29.
@@ -9,10 +9,10 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func queryApps(in collection: Collection) async throws -> [Collection.App] {
+    func queryScreens(in collection: Collection) async throws -> [Collection.Screen] {
         guard let token else { throw MobbinError.cannotFindToken }
 
-        guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_apps_with_preview_screens_collection_filter") else { throw HTTPError.wrongUrlFormat }
+        guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_app_screens_with_app_info_collection_filter") else { throw HTTPError.wrongUrlFormat }
         let URLParams = [
             "select": "*",
         ]
@@ -24,7 +24,6 @@ extension MobbinAPI {
 
         request.addValue("ujasntkfphywizsdaapi.supabase.co", forHTTPHeaderField: "Host")
         request.addValue("keep-alive", forHTTPHeaderField: "Connection")
-        request.addValue("244", forHTTPHeaderField: "Content-Length")
         request.addValue("supabase-js/1.35.7", forHTTPHeaderField: "X-Client-Info")
         request.addValue("\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Microsoft Edge\";v=\"114\"", forHTTPHeaderField: "sec-ch-ua")
         request.addValue("?0", forHTTPHeaderField: "sec-ch-ua-mobile")
@@ -46,14 +45,19 @@ extension MobbinAPI {
         // JSON Body
 
         let bodyObject: [String : Any] = [
+            "filterPlatformType": "mobile",
             "filterAppCategories": NSNull(),
-            "filterAppCompanyStages": NSNull(),
-            "filterOperator": "and",
+            "filterPagePatterns": NSNull(),
+            "filterScreenPatterns": NSNull(),
+            "filterAppRegions": NSNull(),
+            "filterPageTypes": NSNull(),
             "filterAppPlatforms": NSNull(),
             "filterAppStyles": NSNull(),
-            "filterAppRegions": NSNull(),
-            "filterPlatformType": "mobile",
-            "filterCollectionId": collection.id
+            "filterScreenKeywords": NSNull(),
+            "filterAppCompanyStages": NSNull(),
+            "filterCollectionId": collection.id,
+            "filterOperator": "and",
+            "filterScreenElements": NSNull()
         ]
         request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
 
@@ -65,8 +69,9 @@ extension MobbinAPI {
 
         let json = try JSON(data: data)
 
-        return try json.array?.map { json throws -> Collection.App in
+        return try json.array?.map { json throws -> Collection.Screen in
             let id = json["id"].stringValue
+            let appId = json["appId"].stringValue
             let appName = json["appName"].stringValue
             let appCategory = json["appCategory"].stringValue
             let appStyle = json["appStyle"].string
@@ -77,9 +82,6 @@ extension MobbinAPI {
             let companyHqRegion = json["companyHqRegion"].stringValue
             let companyStage = json["companyStage"].stringValue
             let platform = json["platform"].stringValue
-            guard let createdAt = Date.create(mobbin: json["createdAt"].stringValue) else {
-                throw MobbinError.wrongDate(json["createdAt"].stringValue)
-            }
             let appVersionId = json["appVersionId"].stringValue
             guard let appVersionCreatedAt = Date.create(mobbin: json["appVersionCreatedAt"].stringValue) else {
                 throw MobbinError.wrongDate(json["appVersionCreatedAt"].stringValue)
@@ -90,19 +92,25 @@ extension MobbinAPI {
             guard let appVersionPublishedAt = Date.create(mobbin: json["appVersionPublishedAt"].stringValue) else {
                 throw MobbinError.wrongDate(json["appVersionPublishedAt"].stringValue)
             }
-            let collectionAppId = json["collectionAppId"].stringValue
+            let screenNumber = json["screenNumber"].intValue
+            let screenElements = json["screenElements"].array?.map(\.stringValue) ?? []
+            let screenPatterns = json["screenPatterns"].array?.map(\.stringValue) ?? []
+            guard let screenUrl = Foundation.URL(string: json["screenUrl"].stringValue) else {
+                throw MobbinError.wrongURL(json["screenUrl"].stringValue)
+            }
+            guard let createdAt = Date.create(mobbin: json["createdAt"].stringValue) else {
+                throw MobbinError.wrongDate(json["createdAt"].stringValue)
+            }
+            guard let updatedAt = Date.create(mobbin: json["updatedAt"].stringValue) else {
+                throw MobbinError.wrongDate(json["updatedAt"].stringValue)
+            }
             let collectionId = json["collectionId"].stringValue
-            guard let collectionAppCreatedAt = Date.create(mobbin: json["collectionAppCreatedAt"].stringValue) else {
-                throw MobbinError.wrongDate(json["collectionAppCreatedAt"].stringValue)
+            let collectionAppScreenId = json["collectionAppScreenId"].stringValue
+            guard let collectionAppScreenUpdatedAt = Date.create(mobbin: json["collectionAppScreenUpdatedAt"].stringValue) else {
+                throw MobbinError.wrongDate(json["collectionAppScreenUpdatedAt"].stringValue)
             }
-            guard let collectionAppUpdatedAt = Date.create(mobbin: json["collectionAppUpdatedAt"].stringValue) else {
-                throw MobbinError.wrongDate(json["collectionAppUpdatedAt"].stringValue)
-            }
-            let previewScreenUrls = json["previewScreenUrls"].array?.compactMap({ url in
-                Foundation.URL(string: url.stringValue)
-            }) ?? []
 
-            return Collection.App(id: id, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoURL: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, createdAt: createdAt, appVersionID: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, collectionAppID: collectionAppId, collectionID: collectionId, collectionAppCreatedAt: collectionAppCreatedAt, collectionAppUpdatedAt: collectionAppUpdatedAt, previewScreenUrls: previewScreenUrls)
+            return Collection.Screen(id: id, appID: appId, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoURL: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, appVersionID: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, screenNumber: screenNumber, screenElements: screenElements, screenPatterns: screenPatterns, screenURL: screenUrl, createdAt: createdAt, updatedAt: updatedAt, collectionID: collectionId, collectionAppScreenID: collectionAppScreenId, collectionAppScreenUpdatedAt: collectionAppScreenUpdatedAt)
         } ?? []
     }
 }
