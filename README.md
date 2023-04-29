@@ -34,7 +34,7 @@ let mobbinAPI = MobbinAPI(userInfo: UserInfo(...), token: Token(...))
 
 ```swift
 struct UserInfo {
-...
+    ...
 }
 ```
 
@@ -74,7 +74,7 @@ After a successful login, MobbinAPI can obtain a token, which will be used in al
 
 ```swift
 struct Token {
-...
+    ...
 }
 ```
 
@@ -122,7 +122,7 @@ let iOSAppsCount = try await mobbinAPI.iOSAppsCount
 
 ```swift
 struct App {
-....
+    ....
 }
 ```
 
@@ -169,7 +169,7 @@ Mobbin can provide all the screens snapshots of the app.
 
 ```swift
 struct Screen {
-....
+    ....
 }
 ```
 
@@ -196,7 +196,7 @@ Mobbin can provide the entire flows of the app, which consists of a series of sc
 
 ```swift
 struct Flow {
-....
+    ...
 }
 ```
 
@@ -213,10 +213,10 @@ struct Flow {
 
 ```swift
 struct Flow {
-...
-struct Screen {
-....
-}
+    ...
+    struct Screen {
+        ....
+    }
 }
 ```
 
