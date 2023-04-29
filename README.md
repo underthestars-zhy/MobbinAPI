@@ -32,6 +32,12 @@ let mobbinAPI = MobbinAPI(userInfo: UserInfo(...), token: Token(...))
 
 #### UserInfo Compositions
 
+```swift
+struct UserInfo {
+    ...
+}
+```
+
 * `id`: User's' ID
 * `aud`: User's' AUD
 * `role`: Role of the User
@@ -58,6 +64,30 @@ Check the email inbox and copy the verify code that Mobbin sent.
 
 ```swift
 try await mobbinAPI.verify(code: ...)
+```
+
+## Token
+
+After a successful login, MobbinAPI can obtain a token, which will be used in all future steps. If you create a `MobbinAPI` object using `UserInfo` and do not want to log in again, you need to save the previous token and pass it as the initial value for the `MobbinAPI` object.
+
+#### Token Compositions
+
+```swift
+struct Token {
+    ...
+}
+```
+
+* `accessToken`: Used for Authentication
+* `refreshToken`: Used for refreshing `accessToken`
+* `generatedTime`: When the `accessToken` was generated
+
+### Refresh Token
+
+Mobbin has a strict policy on the token. Every token only lasts for one day. So every day, you need to refresh the token.
+
+```swift
+try await mobbinAPI.refreshToken()
 ```
 
 ## Workspace
@@ -90,10 +120,41 @@ mobbinAPI.iOSAppsCount
 
 ### App Compositions
 
+```swift
+struct App {
+    ....
+}
+```
+
+`id`: The ID of this App
+`appName`: The name of this App
+`appCategory`: The category of this App
+`appStyle`: The style of this App (seems a **future** feature)
+`appLogoUrl`: The url of the App's logo
+`appTagline`: The tag line of the App
+`companyHqRegion`: The HQ region of the App (*Honestly, I don't know what it is...*)
+`companyStage`: The current stage of the company behind this app
+`platform`: The platform where the app runs on
+`createdAt`: When this app row was created
+`appVersionId`: The ID of the version
+`appVersionCreatedAt`: When the version was created
+`appVersionUpdatedAt`: When the version was updated
+`appVersionPublishedAt`: When the version was published
+`previewScreenUrls`: Three preview images' urls
+
 ### Fetch All the Apps
 
 ```swift
 try await mobbinAPI.getAlliOSApps()
+```
+
+### Page query
+
+This method will return 24 apps, which is a page. If you want to query the next page, using the last app you queried privously. `nil` for querying the first page.
+
+```swift
+try await mobbinAPI.queryNextPage(nil) // Query first page
+try await mobbinAPI.queryNextPage(App(...))
 ```
 
 ## iOS Screens
