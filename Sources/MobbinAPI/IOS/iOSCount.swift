@@ -9,19 +9,19 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    var iOSAppsCount: Int {
+    public var iOSAppsCount: Int {
         get async throws {
             try await getiOSMetaInfo().0
         }
     }
 
-    var iOSScreensCount: Int {
+    public var iOSScreensCount: Int {
         get async throws {
             try await getiOSMetaInfo().1
         }
     }
 
-    var iOSFlowCount: Int {
+    public var iOSFlowCount: Int {
         get async throws {
             try await getiOSMetaInfo().2
         }

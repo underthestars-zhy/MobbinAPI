@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func getAlliOSApps() async throws -> [App] {
+    public func getAlliOSApps() async throws -> [App] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         var lastAppPublishedDate: Date? = nil
@@ -115,7 +115,7 @@ extension MobbinAPI {
         return res
     }
 
-    func queryNextPage(_ app: App?) async throws -> [App] {
+    public func queryNextPage(_ app: App?) async throws -> [App] {
         guard let token else { throw MobbinError.cannotFindToken }
         
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_apps_with_preview_screens_filter") else { throw HTTPError.wrongUrlFormat }

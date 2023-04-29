@@ -7,24 +7,24 @@
 
 import Foundation
 
-struct Flow {
-    let id: String
-    let name: String
-    let actions: [String]
-    let parentAppSectionId: String?
-    let order: Int
-    let updatedAt: Date
-    let appVersionId: String
-    let screens: [Screen]
+public struct Flow {
+    public let id: String
+    public let name: String
+    public let actions: [String]
+    public let parentAppSectionId: String?
+    public let order: Int
+    public let updatedAt: Date
+    public let appVersionId: String
+    public let screens: [Screen]
 
-    struct Screen {
-        let appScreenId: String
-        let order: Int
-        let hotspotWidth: Double?
-        let hotspotHeight: Double?
-        let hotspotX: Double?
-        let hotspotY: Double?
-        let hotspotType: String?
-        let screenUrl: URL
+    public struct Screen {
+        public let appScreenId: String
+        public let order: Int
+        public let hotspotWidth: Double?
+        public let hotspotHeight: Double?
+        public let hotspotX: Double?
+        public let hotspotY: Double?
+        public let hotspotType: String?
+        public let screenUrl: URL
     }
 }

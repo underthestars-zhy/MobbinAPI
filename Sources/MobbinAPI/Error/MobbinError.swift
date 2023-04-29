@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MobbinError: Error {
+public enum MobbinError: Error {
     case emailProblem
     case cannotFindToken
     case cannotFindUserInfo

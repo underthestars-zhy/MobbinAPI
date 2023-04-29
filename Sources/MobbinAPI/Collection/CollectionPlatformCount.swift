@@ -8,17 +8,17 @@
 import Foundation
 import SwiftyJSON
 
-struct PlatformCount: Equatable {
-    let mobileAppsCount: Int
-    let webAppsCount: Int
-    let mobileScreensCount: Int
-    let webScreensCount: Int
-    let mobileFlowsCount: Int
-    let webFlowsCount: Int
+public struct PlatformCount: Equatable {
+    public let mobileAppsCount: Int
+    public let webAppsCount: Int
+    public let mobileScreensCount: Int
+    public let webScreensCount: Int
+    public let mobileFlowsCount: Int
+    public let webFlowsCount: Int
 }
 
 extension MobbinAPI {
-    func platformCount(of collection: Collection) async throws -> PlatformCount {
+    public func platformCount(of collection: Collection) async throws -> PlatformCount {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/collections_with_platform_counts") else { throw HTTPError.wrongUrlFormat }

@@ -8,12 +8,12 @@
 import Foundation
 import SwiftyJSON
 
-struct Token: Codable {
+public struct Token: Codable {
     var accessToken: String
     var refreshToken: String
     var generatedTime: Date
 
-    init(accessToken: String, refreshToken: String) {
+    public init(accessToken: String, refreshToken: String) {
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         self.generatedTime = Date()

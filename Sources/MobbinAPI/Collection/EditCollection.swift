@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func edit(collection: Collection, name: String?, description: String?) async throws -> Collection {
+    public func edit(collection: Collection, name: String?, description: String?) async throws -> Collection {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/collections") else { throw HTTPError.wrongUrlFormat }

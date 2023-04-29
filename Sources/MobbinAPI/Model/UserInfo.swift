@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserInfo {
+public struct UserInfo: Codable {
     let id: String
     let aud: String
     let role: String
@@ -18,7 +18,7 @@ struct UserInfo {
     let avatarUrl: URL
     let fullName: String
 
-    init(id: String, aud: String, role: String, email: String, emailConfirmedAt: Date, recoverySentAt: Date, lastSignInAt: Date, avatarUrl: URL, fullName: String) {
+    public init(id: String, aud: String, role: String, email: String, emailConfirmedAt: Date, recoverySentAt: Date, lastSignInAt: Date, avatarUrl: URL, fullName: String) {
         self.id = id
         self.aud = aud
         self.role = role
@@ -30,7 +30,7 @@ struct UserInfo {
         self.fullName = fullName
     }
 
-    init?(id: String, aud: String, role: String, email: String, emailConfirmedAt: String, recoverySentAt: String, lastSignInAt: String, avatarUrl: String, fullName: String) {
+    public init?(id: String, aud: String, role: String, email: String, emailConfirmedAt: String, recoverySentAt: String, lastSignInAt: String, avatarUrl: String, fullName: String) {
         guard let emailConfirmedAt = Date.create(login: emailConfirmedAt) else { return nil }
         guard let recoverySentAt =  Date.create(login: recoverySentAt) else { return nil }
         guard let lastSignInAt =  Date.create(login: lastSignInAt) else { return nil }

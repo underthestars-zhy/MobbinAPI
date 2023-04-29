@@ -8,7 +8,7 @@
 import Foundation
 
 extension MobbinAPI {
-    func delete(collection: Collection) async throws {
+    public func delete(collection: Collection) async throws {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/collections") else {return}

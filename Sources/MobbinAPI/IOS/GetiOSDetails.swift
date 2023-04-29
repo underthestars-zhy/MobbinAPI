@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func getiOSScreens(of app: App) async throws -> [Screen] {
+    public func getiOSScreens(of app: App) async throws -> [Screen] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_app_screens_filter") else { throw HTTPError.wrongUrlFormat }
@@ -83,7 +83,7 @@ extension MobbinAPI {
         } ?? []
     }
 
-    func getiOSFlows(of app: App) async throws -> [Flow] {
+    public func getiOSFlows(of app: App) async throws -> [Flow] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_app_sections_filter") else { throw HTTPError.wrongUrlFormat }

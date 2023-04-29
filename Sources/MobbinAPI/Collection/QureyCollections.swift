@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func queryCollections() async throws -> [Collection] {
+    public func queryCollections() async throws -> [Collection] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/workspaces") else { throw HTTPError.wrongUrlFormat }

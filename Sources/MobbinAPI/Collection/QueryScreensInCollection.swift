@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func queryScreens(in collection: Collection) async throws -> [Collection.Screen] {
+    public func queryScreens(in collection: Collection) async throws -> [Collection.Screen] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_app_screens_with_app_info_collection_filter") else { throw HTTPError.wrongUrlFormat }

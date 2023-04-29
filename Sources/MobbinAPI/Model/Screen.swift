@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Screen {
-    let screenNumber: Int
-    let screenUrl: URL
-    let appVersionId: String
-    let id: String
-    let screenElements: [String]
-    let screenPatterns: [String]
-    let updatedAt: Date
-    let createdAt: Date
+public struct Screen {
+    public let screenNumber: Int
+    public let screenUrl: URL
+    public let appVersionId: String
+    public let id: String
+    public let screenElements: [String]
+    public let screenPatterns: [String]
+    public let updatedAt: Date
+    public let createdAt: Date
 }

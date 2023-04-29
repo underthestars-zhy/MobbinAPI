@@ -8,7 +8,7 @@
 import Foundation
 
 extension MobbinAPI {
-    func createCollection(in workspace: Workspace, name: String, description: String) async throws {
+    public func createCollection(in workspace: Workspace, name: String, description: String) async throws {
         guard let token else { throw MobbinError.cannotFindToken }
         guard let userInfo else { throw MobbinError.cannotFindToken }
         
