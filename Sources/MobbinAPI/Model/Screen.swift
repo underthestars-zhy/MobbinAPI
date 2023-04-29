@@ -8,5 +8,12 @@
 import Foundation
 
 struct Screen {
-    
+    let screenNumber: Int
+    let screenUrl: URL
+    let appVersionId: String
+    let id: String
+    let screenElements: [String]
+    let screenPatterns: [String]
+    let updatedAt: Date
+    let createdAt: Date
 }

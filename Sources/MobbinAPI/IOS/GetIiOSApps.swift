@@ -12,9 +12,7 @@ extension MobbinAPI {
     func getAlliOSApps() async throws -> [iOSApp] {
         guard let token else { throw MobbinError.cannotFindToken }
 
-        var currentCount = 0
         var lastAppPublishedDate: Date? = nil
-        let totalCount = try await self.iOSAppsCount
 
         var res = [iOSApp]()
 
@@ -109,7 +107,6 @@ extension MobbinAPI {
                 break
             }
             res += apps
-            currentCount = res.count
             if let date = apps.last?.appVersionPublishedAt {
                 lastAppPublishedDate = date
             }
@@ -197,9 +194,9 @@ extension MobbinAPI {
             guard let appVersionPublishedAt = Date.create(mobbin: json["appVersionPublishedAt"].stringValue) else {
                 throw MobbinError.wrongDate(json["appVersionPublishedAt"].stringValue)
             }
-            let previewScreenUrls = json["previewScreenUrls"].array?.compactMap({ url in
+            let previewScreenUrls = json["previewScreenUrls"].array?.compactMap { url in
                 Foundation.URL(string: url.stringValue)
-            }) ?? []
+            } ?? [Foundation.URL]()
 
             return iOSApp(id: id, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoUrl: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, createdAt: createdAt, appVersionId: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, previewScreenUrls: previewScreenUrls)
         } ?? []

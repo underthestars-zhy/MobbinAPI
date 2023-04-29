@@ -22,7 +22,12 @@ extension Date {
         let dateFormatter2 = DateFormatter()
         dateFormatter2.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         dateFormatter2.timeZone = TimeZone(abbreviation: "UTC")
-        return dateFormatter1.date(from: dateString) ?? dateFormatter2.date(from: dateString)
+
+        let dateFormatter3 = ISO8601DateFormatter()
+        dateFormatter3.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        dateFormatter3.timeZone = TimeZone(abbreviation: "UTC")
+
+        return dateFormatter1.date(from: dateString) ?? dateFormatter2.date(from: dateString) ?? dateFormatter3.date(from: dateString)
     }
 
     var mobbin: String {
