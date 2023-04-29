@@ -108,4 +108,40 @@ final class MobbinAPITests: XCTestCase {
 
         XCTAssertEqual(flows.count, 4)
     }
+
+    func testEditCollection() async throws {
+        let api = MobbinAPI(email: "zhuhaoyu0909@icloud.com", token: Token(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgyNzc3MTQ0LCJzdWIiOiJkMmI0MTU5MC01M2E0LTRjNGQtOWQ5NC0wNmY1ZDcxODA3YzMiLCJlbWFpbCI6InpodWhhb3l1MDkwOUBpY2xvdWQuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly91amFzbnRrZnBoeXdpenNkYWFwaS5zdXBhYmFzZS5jby9zdG9yYWdlL3YxL29iamVjdC9wdWJsaWMvdXNlci91c2VyX2F2YXRhcnMvYTcyZTgwNjQtZjdlYi00YjBhLTg0MWMtMzlhM2ExMGRmY2E0LmpwZWciLCJmdWxsX25hbWUiOiJVVFN6aHkifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2ODI1MjE1OTR9XSwic2Vzc2lvbl9pZCI6ImNjMzI3ZDMzLWVkODAtNDM1Mi05NTRlLTI5OWZiNzQ1YmM5ZiJ9.s4eXeIaY9OBKT_-TxAPeWtnivxdRO1yM9K7gT68jAac", refreshToken: ""))
+
+        let collection = try await api.queryCollections().first!
+
+        let newCollection = try await api.edit(collection: collection, name: "Edited", description: nil)
+
+        XCTAssertEqual(newCollection.name, "Edited")
+    }
+
+    func testFetchWorkspace() async throws {
+        let api = MobbinAPI(email: "zhuhaoyu0909@icloud.com", token: Token(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgyNzc3MTQ0LCJzdWIiOiJkMmI0MTU5MC01M2E0LTRjNGQtOWQ5NC0wNmY1ZDcxODA3YzMiLCJlbWFpbCI6InpodWhhb3l1MDkwOUBpY2xvdWQuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly91amFzbnRrZnBoeXdpenNkYWFwaS5zdXBhYmFzZS5jby9zdG9yYWdlL3YxL29iamVjdC9wdWJsaWMvdXNlci91c2VyX2F2YXRhcnMvYTcyZTgwNjQtZjdlYi00YjBhLTg0MWMtMzlhM2ExMGRmY2E0LmpwZWciLCJmdWxsX25hbWUiOiJVVFN6aHkifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2ODI1MjE1OTR9XSwic2Vzc2lvbl9pZCI6ImNjMzI3ZDMzLWVkODAtNDM1Mi05NTRlLTI5OWZiNzQ1YmM5ZiJ9.s4eXeIaY9OBKT_-TxAPeWtnivxdRO1yM9K7gT68jAac", refreshToken: ""))
+
+        let workspace = try await api.fetchWorkspace()
+
+        XCTAssertEqual(workspace.name, "Zhuhaoyu 0909")
+    }
+
+    func testCreateCollection() async throws {
+        let api = MobbinAPI(userInfo: .init(id: "d2b41590-53a4-4c4d-9d94-06f5d71807c3", aud: "", role: "", email: "zhuhaoyu0909@icloud.com", emailConfirmedAt: Date(), recoverySentAt: Date(), lastSignInAt: Date(), avatarUrl: URL(string: "https://ujasntkfphywizsdaapi.supabase.co/storage/v1/object/public/user/user_avatars/a72e8064-f7eb-4b0a-841c-39a3a10dfca4.jpeg")!, fullName: ""), token: Token(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgyNzc3MTQ0LCJzdWIiOiJkMmI0MTU5MC01M2E0LTRjNGQtOWQ5NC0wNmY1ZDcxODA3YzMiLCJlbWFpbCI6InpodWhhb3l1MDkwOUBpY2xvdWQuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly91amFzbnRrZnBoeXdpenNkYWFwaS5zdXBhYmFzZS5jby9zdG9yYWdlL3YxL29iamVjdC9wdWJsaWMvdXNlci91c2VyX2F2YXRhcnMvYTcyZTgwNjQtZjdlYi00YjBhLTg0MWMtMzlhM2ExMGRmY2E0LmpwZWciLCJmdWxsX25hbWUiOiJVVFN6aHkifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2ODI1MjE1OTR9XSwic2Vzc2lvbl9pZCI6ImNjMzI3ZDMzLWVkODAtNDM1Mi05NTRlLTI5OWZiNzQ1YmM5ZiJ9.s4eXeIaY9OBKT_-TxAPeWtnivxdRO1yM9K7gT68jAac", refreshToken: ""))
+
+        let workspace = try await api.fetchWorkspace()
+
+        try await api.createCollection(in: workspace, name: "Hello", description: "hi")
+    }
+
+    func testDeleteCollections() async throws {
+        let api = MobbinAPI(email: "zhuhaoyu0909@icloud.com", token: Token(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgyNzc3MTQ0LCJzdWIiOiJkMmI0MTU5MC01M2E0LTRjNGQtOWQ5NC0wNmY1ZDcxODA3YzMiLCJlbWFpbCI6InpodWhhb3l1MDkwOUBpY2xvdWQuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly91amFzbnRrZnBoeXdpenNkYWFwaS5zdXBhYmFzZS5jby9zdG9yYWdlL3YxL29iamVjdC9wdWJsaWMvdXNlci91c2VyX2F2YXRhcnMvYTcyZTgwNjQtZjdlYi00YjBhLTg0MWMtMzlhM2ExMGRmY2E0LmpwZWciLCJmdWxsX25hbWUiOiJVVFN6aHkifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2ODI1MjE1OTR9XSwic2Vzc2lvbl9pZCI6ImNjMzI3ZDMzLWVkODAtNDM1Mi05NTRlLTI5OWZiNzQ1YmM5ZiJ9.s4eXeIaY9OBKT_-TxAPeWtnivxdRO1yM9K7gT68jAac", refreshToken: ""))
+
+        let collection = try await api.queryCollections().first(where: { c in
+            c.name == "Hello"
+        })!
+
+        try await api.delete(collection: collection)
+    }
 }

@@ -10,6 +10,7 @@ import Foundation
 enum MobbinError: Error {
     case emailProblem
     case cannotFindToken
+    case cannotFindUserInfo
     case wrongURL(String)
     case wrongDate(String)
 }

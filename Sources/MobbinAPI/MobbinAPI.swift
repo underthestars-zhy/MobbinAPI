@@ -11,8 +11,9 @@ public class MobbinAPI {
         self.token = token
     }
 
-    init(userInfo: UserInfo) {
+    init(userInfo: UserInfo, token: Token? = nil) {
         self.email = userInfo.email
         self.userInfo = userInfo
+        self.token = token
     }
 }
