@@ -1,11 +1,13 @@
+![](./Github/Mobbin.png)
+
 # MobbinAPI
 
 MobbinAPI is an third-party unofficial open-source intuitive SWIFT API for [Mobbin](https://mobbin.com).
 
-* 100% build in SWIFT
-* 100% build with ASYNC
+* 100% build in **SWIFT**
+* 100% build with **ASYNC**
 * Fetch Apps, Screens, Flows and Collections
-* Support Free Mobbin Account
+* Support **Free** Mobbin Account
 * Persistent "Login" (Refresh Token)
 
 ```swift
@@ -28,7 +30,7 @@ let mobbinAPI = MobbinAPI(userInfo: UserInfo(...))
 let mobbinAPI = MobbinAPI(userInfo: UserInfo(...), token: Token(...))
 ```
 
-#### Composition of UserInfo
+#### UserInfo Compositions
 
 * `id`: User's' ID
 * `aud`: User's' AUD
@@ -62,7 +64,7 @@ try await mobbinAPI.verify(code: ...)
 
 MobbinAPI currently only support one workspace account.
 
-### Composition
+### Workspace Compositions
 
 * `name`: Workspace Name (usually email prefix)
 * `id`: Workspace ID
@@ -73,3 +75,39 @@ MobbinAPI currently only support one workspace account.
 ```swift
 let workspace = try await mobbinAPI.fetchWorkspace()
 ```
+
+## iOS Apps
+
+MobbinAPI can fetch all iOS apps that Mobbin has.
+
+### Count
+
+This variable can show how many apps thta Mobbin has. However, it seems that this number is wrong. Maybe Mobbin's developers should fix it. It is bigger that actual number.
+
+```swift
+mobbinAPI.iOSAppsCount
+```
+
+### App Compositions
+
+### Fetch All the Apps
+
+```swift
+try await mobbinAPI.getAlliOSApps()
+```
+
+## iOS Screens
+
+Will support in the future.
+
+## iOS Flows
+
+Will support in the future.
+
+## Android
+
+Will support in the future.
+
+## Web
+
+Will support in the future.
