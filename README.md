@@ -8,7 +8,7 @@ MobbinAPI is an third-party unofficial open-source intuitive SWIFT API for [Mobb
 * 100% build with **ASYNC**
 * Fetch Apps, Screens, Flows and Collections
 * Support **Free** Mobbin Account
-* Persistent "Login" (Refresh Token)
+* Persistent "Login" Status
 
 ```swift
 let mobbinAPI = MobbinAPI(email: "zhuhaoyu0909@icloud.com")
@@ -50,7 +50,7 @@ struct UserInfo {
 
 ## Login
 
-If creating the `MobbinAPI` by email or by UserInfo but didn't set the token, run following steps is a **must**.
+If you created the `MobbinAPI` either by email or by `UserInfo` but did not set the token, the following steps are **mandatory** to be executed.
 
 ### Send Email
 
@@ -58,7 +58,7 @@ If creating the `MobbinAPI` by email or by UserInfo but didn't set the token, ru
 try await mobbinAPI.sendEmail()
 ```
 
-Check the email inbox and copy the verify code that Mobbin sent.
+Check the email inbox and copy the verification code that Mobbin sent.
 
 ### Login with Code
 
@@ -84,7 +84,7 @@ struct Token {
 
 ### Refresh Token
 
-Mobbin has a strict policy on the token. Every token only lasts for one day. So every day, you need to refresh the token.
+Mobbin has a strict policy regarding tokens, wherein each token only lasts for one day. Therefore, it is necessary to refresh the token daily.
 
 ```swift
 try await mobbinAPI.refreshToken()
@@ -92,7 +92,7 @@ try await mobbinAPI.refreshToken()
 
 ## Workspace
 
-MobbinAPI currently only support one workspace account.
+MobbinAPI currently only supports **one workspace account**.
 
 ### Workspace Compositions
 
@@ -112,7 +112,7 @@ MobbinAPI can fetch all iOS apps that Mobbin has.
 
 ### Count
 
-This variable can show how many apps thta Mobbin has. However, it seems that this number is wrong. Maybe Mobbin's developers should fix it. It is bigger that actual number.
+This variable displays the number of apps that Mobbin has, but it appears to be incorrect. Perhaps the developers of Mobbin should rectify it, as it shows a higher number than the actual count.
 
 ```swift
 let iOSAppsCount = try await mobbinAPI.iOSAppsCount
@@ -126,21 +126,21 @@ struct App {
 }
 ```
 
-`id`: The ID of this App
-`appName`: The name of this App
-`appCategory`: The category of this App
-`appStyle`: The style of this App (seems a **future** feature)
-`appLogoUrl`: The url of the App's logo
-`appTagline`: The tag line of the App
-`companyHqRegion`: The HQ region of the App (*Honestly, I don't know what it is...*)
-`companyStage`: The current stage of the company behind this app
-`platform`: The platform where the app runs on
-`createdAt`: When this app row was created
-`appVersionId`: The ID of the version
-`appVersionCreatedAt`: When the version was created
-`appVersionUpdatedAt`: When the version was updated
-`appVersionPublishedAt`: When the version was published
-`previewScreenUrls`: Three preview images' urls
+* `id`: The ID of this App
+* `appName`: The name of this App
+* `appCategory`: The category of this App
+* `appStyle`: The style of this App (seems a **future** feature)
+* `appLogoUrl`: The url of the App's logo
+* `appTagline`: The tag line of the App
+* `companyHqRegion`: The HQ region of the App (*Honestly, I don't know what it is...*)
+* `companyStage`: The current stage of the company behind this app
+* `platform`: The platform where the app runs on
+* `createdAt`: When this app row was created
+* `appVersionId`: The ID of the version
+* `appVersionCreatedAt`: When the version was created
+* `appVersionUpdatedAt`: When the version was updated
+* `appVersionPublishedAt`: When the version was published
+* `previewScreenUrls`: Three preview images' urls
 
 ### Fetch All the Apps
 
@@ -150,7 +150,7 @@ try await mobbinAPI.getAlliOSApps()
 
 ### Page query
 
-This method will return 24 apps, which is a page. If you want to query the next page, using the last app you queried privously. `nil` for querying the first page.
+This method will return 24 apps, which represents a page. To query the next page, use the last app you queried previously. Use `nil` to query the first page.
 
 ```swift
 try await mobbinAPI.queryNextPage(nil) // Query first page
@@ -163,7 +163,7 @@ After you successfully queried apps, you can query the detailed information for 
 
 #### Screens
 
-This method will query all the screens of this app.
+Mobbin can provide all the screens snapshots of the app.
 
 ##### Screen Compositions
 
@@ -173,19 +173,66 @@ struct Screen {
 }
 ```
 
-`screenNumber`: The number of the screen
-`screenUrl`: The URL of the image of this screen
-`appVersionId`: The ID of the App's Version
-`id`: The ID of the screen
-`screenElements`: A array that contains all the elements in the screen
-`screenPatterns`: A array that contains all the patterns in the screen
-`updatedAt`: When the screen was updated
-`createdAt`: When the screen was created
+* `screenNumber`: The number of the screen
+* `screenUrl`: The URL of the image of this screen
+* `appVersionId`: The ID of the App's Version
+* `id`: The ID of the screen
+* `screenElements`: A array that contains all the elements in the screen
+* `screenPatterns`: A array that contains all the patterns in the screen
+* `updatedAt`: When the screen was updated
+* `createdAt`: When the screen was created
 
 ##### Query Screens
 
 ```swift
 try await api.getiOSScreens(of: App(...))
+```
+
+#### Flows
+
+Mobbin can provide the entire flows of the app, which consists of a series of screens.
+
+##### Flow Compositions
+
+```swift
+struct Flow {
+    ....
+}
+```
+
+* `id`: The ID of the flow
+* `name`: The name of the flow
+* `actions`: A array that contains all the actions in the flow
+* `parentAppSectionId`: The ID of the parent flow (flow is a **tree sturture**, MobbinAPI will surpport *directly parse& it to the tree flow in the future)
+* `order`: The order of the flow
+* `updatedAt`: When the screen was updated
+* `appVersionId`: The app verion ID of the app, which contains this flow
+* `screens`: All the screens contained in the flow
+
+##### Flow.Screen Compositions
+
+```swift
+struct Flow {
+    ...
+    struct Screen {
+        ....
+    }
+}
+```
+
+* `appScreenId`: The ID of the Screen
+* `order`: The order of the flow
+* `hotspotWidth`: The width of the hotspot (if there is one)
+* `hotspotHeight`: The height of the hotspot (if there is one)
+* `hotspotX`: The x coordinate of the hotspot (if there is one)
+* `hotspotY`: The y coordinate of the hotspot (if there is one)
+* `hotspotType`: The type of the hotspot (if there is one)
+* `screenUrl`: The url of the screen's image
+
+##### Query Flows
+
+```swift
+try await api.getiOSFlows(of: App(...))
 ```
 
 ## iOS Screens
@@ -206,4 +253,4 @@ Will support in the future.
 
 ## Collection
 
-MobbinAPI support full control on account's collections.
+MobbinAPI supports **full control** over an account's collections.
