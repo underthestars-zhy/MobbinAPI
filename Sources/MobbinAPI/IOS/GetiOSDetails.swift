@@ -9,10 +9,6 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func getiOSDetails(of app: iOSApp) async throws {
-
-    }
-
     func getiOSScreens(of app: iOSApp) async throws -> [Screen] {
         guard let token else { throw MobbinError.cannotFindToken }
 
