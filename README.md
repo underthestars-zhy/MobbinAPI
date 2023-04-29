@@ -115,7 +115,7 @@ MobbinAPI can fetch all iOS apps that Mobbin has.
 This variable can show how many apps thta Mobbin has. However, it seems that this number is wrong. Maybe Mobbin's developers should fix it. It is bigger that actual number.
 
 ```swift
-mobbinAPI.iOSAppsCount
+let iOSAppsCount = try await mobbinAPI.iOSAppsCount
 ```
 
 ### App Compositions
@@ -157,6 +157,37 @@ try await mobbinAPI.queryNextPage(nil) // Query first page
 try await mobbinAPI.queryNextPage(App(...))
 ```
 
+### Query Details
+
+After you successfully queried apps, you can query the detailed information for certian app.
+
+#### Screens
+
+This method will query all the screens of this app.
+
+##### Screen Compositions
+
+```swift
+struct Screen {
+    ....
+}
+```
+
+`screenNumber`: The number of the screen
+`screenUrl`: The URL of the image of this screen
+`appVersionId`: The ID of the App's Version
+`id`: The ID of the screen
+`screenElements`: A array that contains all the elements in the screen
+`screenPatterns`: A array that contains all the patterns in the screen
+`updatedAt`: When the screen was updated
+`createdAt`: When the screen was created
+
+##### Query Screens
+
+```swift
+try await api.getiOSScreens(of: App(...))
+```
+
 ## iOS Screens
 
 Will support in the future.
@@ -172,3 +203,7 @@ Will support in the future.
 ## Web
 
 Will support in the future.
+
+## Collection
+
+MobbinAPI support full control on account's collections.
