@@ -14,7 +14,7 @@ extension MobbinAPI {
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/workspaces") else { throw HTTPError.wrongUrlFormat }
         let URLParams = [
-            "select": "name,id,type,collections(name,id,updatedAt,createdAt)",
+            "select": "name,id,type,collections(name,id,updatedAt,createdAt,description)",
         ]
         URL = URL.appendingQueryParameters(URLParams)
         var request = URLRequest(url: URL)
@@ -52,6 +52,7 @@ extension MobbinAPI {
         return try json.arrayValue.first?["collections"].array?.map { json throws -> Collection in
             let name = json["name"].stringValue
             let id = json["id"].stringValue
+            let description = json["description"].stringValue
             guard let updatedAt = Date.create(mobbin: json["updatedAt"].stringValue) else {
                 throw MobbinError.wrongDate(json["updatedAt"].stringValue)
             }
@@ -59,7 +60,7 @@ extension MobbinAPI {
                 throw MobbinError.wrongDate(json["createdAt"].stringValue)
             }
 
-            return Collection(name: name, id: id, updatedAt: updatedAt, createdAt: createdAt)
+            return Collection(name: name, id: id, description: description, updatedAt: updatedAt, createdAt: createdAt)
         } ?? []
     }
 }

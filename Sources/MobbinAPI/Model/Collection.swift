@@ -10,6 +10,7 @@ import Foundation
 struct Collection {
     let name: String
     let id: String
+    let description: String
     let updatedAt: Date
     let createdAt: Date
 
@@ -59,5 +60,43 @@ struct Collection {
         let collectionID: String
         let collectionAppScreenID: String
         let collectionAppScreenUpdatedAt: Date
+    }
+
+    struct Flow: Codable {
+        struct Screen: Codable {
+            let id: String
+            let order: Int
+            let hotspotType: String?
+            let hotspotX: Double?
+            let hotspotY: Double?
+            let hotspotWidth: Double?
+            let hotspotHeight: Double?
+            let screenID: String
+            let screenElements: [String]
+            let screenPatterns: [String]
+            let screenURL: URL
+        }
+
+        let id: String
+        let name: String
+        let actions: [String]
+        let order: Int
+        let appID: String
+        let appName: String
+        let appCategory: String
+        let appStyle: String?
+        let appLogoURL: URL
+        let appTagline: String
+        let companyHqRegion: String
+        let companyStage: String
+        let platform: String
+        let appVersionID: String
+        let appVersionCreatedAt: Date
+        let appVersionUpdatedAt: Date
+        let appVersionPublishedAt: Date
+        let collectionID: String
+        let collectionAppSectionID: String
+        let collectionAppSectionUpdatedAt: Date
+        let screens: [Screen]
     }
 }
