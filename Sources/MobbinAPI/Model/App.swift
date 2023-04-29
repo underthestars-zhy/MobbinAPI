@@ -1,5 +1,5 @@
 //
-//  IOSApp.swift
+//  App.swift
 //  
 //
 //  Created by 朱浩宇 on 2023/4/27.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct iOSApp {
+struct App {
     let id: String
     let appName: String
     let appCategory: String

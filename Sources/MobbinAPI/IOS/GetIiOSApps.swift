@@ -9,14 +9,14 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    func getAlliOSApps() async throws -> [iOSApp] {
+    func getAlliOSApps() async throws -> [App] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         var lastAppPublishedDate: Date? = nil
 
-        var res = [iOSApp]()
+        var res = [App]()
 
-        func recursion() async throws -> [iOSApp] {
+        func recursion() async throws -> [App] {
             guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_apps_with_preview_screens_filter") else { throw HTTPError.wrongUrlFormat }
             let URLParams = [
                 "select": "*",
@@ -68,7 +68,7 @@ extension MobbinAPI {
 
             let json = try JSON(data: data)
 
-            return try json.array?.map { json throws -> iOSApp in
+            return try json.array?.map { json throws -> App in
                 let id = json["id"].stringValue
                 let appName = json["appName"].stringValue
                 let appCategory = json["appCategory"].stringValue
@@ -97,7 +97,7 @@ extension MobbinAPI {
                     Foundation.URL(string: url.stringValue)
                 }) ?? []
 
-                return iOSApp(id: id, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoUrl: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, createdAt: createdAt, appVersionId: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, previewScreenUrls: previewScreenUrls)
+                return App(id: id, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoUrl: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, createdAt: createdAt, appVersionId: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, previewScreenUrls: previewScreenUrls)
             } ?? []
         }
 
@@ -115,7 +115,7 @@ extension MobbinAPI {
         return res
     }
 
-    func queryNextPage(_ app: iOSApp?) async throws -> [iOSApp] {
+    func queryNextPage(_ app: App?) async throws -> [App] {
         guard let token else { throw MobbinError.cannotFindToken }
         
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_apps_with_preview_screens_filter") else { throw HTTPError.wrongUrlFormat }
@@ -169,7 +169,7 @@ extension MobbinAPI {
 
         let json = try JSON(data: data)
 
-        return try json.array?.map { json throws -> iOSApp in
+        return try json.array?.map { json throws -> App in
             let id = json["id"].stringValue
             let appName = json["appName"].stringValue
             let appCategory = json["appCategory"].stringValue
@@ -198,7 +198,7 @@ extension MobbinAPI {
                 Foundation.URL(string: url.stringValue)
             } ?? [Foundation.URL]()
 
-            return iOSApp(id: id, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoUrl: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, createdAt: createdAt, appVersionId: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, previewScreenUrls: previewScreenUrls)
+            return App(id: id, appName: appName, appCategory: appCategory, appStyle: appStyle, appLogoUrl: appLogoUrl, appTagline: appTagline, companyHqRegion: companyHqRegion, companyStage: companyStage, platform: platform, createdAt: createdAt, appVersionId: appVersionId, appVersionCreatedAt: appVersionCreatedAt, appVersionUpdatedAt: appVersionUpdatedAt, appVersionPublishedAt: appVersionPublishedAt, previewScreenUrls: previewScreenUrls)
         } ?? []
     }
 }
