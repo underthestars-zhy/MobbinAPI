@@ -203,7 +203,7 @@ struct Flow {
 * `id`: The ID of the flow
 * `name`: The name of the flow
 * `actions`: A array that contains all the actions in the flow
-* `parentAppSectionId`: The ID of the parent flow (flow is a **tree sturture**, MobbinAPI will surpport *directly parse& it to the tree flow in the future)
+* `parentAppSectionId`: The ID of the parent flow (flow is a **tree sturture**)
 * `order`: The order of the flow
 * `updatedAt`: When the screen was updated
 * `appVersionId`: The app verion ID of the app, which contains this flow
@@ -233,6 +233,14 @@ struct Flow {
 
 ```swift
 try await api.getiOSFlows(of: App(...))
+```
+
+##### Generate Tree Structure Flow
+
+MobbinAPI is capable of generating a tree structure based on the flow array. `Tree` is an Enum with a single case `.children`.
+
+```swift
+let tree = api.generateTreeSturctureFlow(from: flows)
 ```
 
 ## iOS Screens
