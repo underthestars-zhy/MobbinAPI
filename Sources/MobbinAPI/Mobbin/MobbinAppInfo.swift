@@ -17,10 +17,11 @@ extension MobbinAPI {
         } else {
             token = try await getMobbinQueryToken()
         }
-
-        guard var URL = URL(string: "https://mobbin.com/_next/data/\(token)/apps/\(app.appName.lowercased())-\(app.platform)-\(app.id)/_/screens.json") else { throw HTTPError.wrongUrlFormat }
+        
+        guard var URL = URL(string: "https://mobbin.com/_next/data/\(token)/apps/\(app.appName.lowercased().replacing(" ", with: "-"))-\(app.platform)-\(app.id)/_/screens.json") else {
+            throw HTTPError.wrongUrlFormat }
         let URLParams = [
-            "appSlug": "\(app.appName.lowercased())-\(app.platform)-\(app.id),_,screens",
+            "appSlug": "\(app.appName.lowercased().replacing(" ", with: "-"))-\(app.platform)-\(app.id),_,screens",
         ]
 
         URL = URL.appendingQueryParameters(URLParams)
