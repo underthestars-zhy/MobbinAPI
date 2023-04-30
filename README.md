@@ -320,3 +320,50 @@ The following method can fetch flows in collections. The result is a `Collection
 ```swift
 let apps = try await api.queryFlows(in: Collection(...))
 ```
+
+## "Mobbin" API
+
+Mobbins's API is very special in that some features require the use of Mobbin's own API service instead of a third-party service. The `MobbinAPI` provides control over these levels.
+
+### Get Mobbin Query Token
+
+Almost all of Mobbin's API endpoints use the GET method, and Mobbin requires a query token to authenticate requests. The duration of the token's validity is uncertain, so the best practice is to obtain a new token each time.
+
+```swift
+let token = try await mobbinAPI.getMobbinQueryToken()
+```
+
+This method will generate a Mobbin query token, which can used in the future actions.
+
+### AppStore URL
+
+Mobbin collects the download URL for every app, but it is not visible through the third-party API service. Therefore, we need to use Mobbin's own API.
+
+```swift
+let downloadURL = try await mobbinAPI.downloadURL(of: App(...), mobbinToken: "...")
+let downloadURL = try await mobbinAPI.downloadURL(of: App(...),)
+```
+
+### Versions
+
+Mobbin provides a special feature for paid users, which allows them to view previous versions of an app. This feature can be easily accessed using the `MobbinAPI`.
+
+```swift
+let versions: [Version] = try await mobbinAPI.versions(of: App(...), mobbinToken: "...")
+let versions: [Version] = try await mobbinAPI.versions(of: App(...),)
+```
+
+#### Verison Compositions 
+
+* `id`: The id of the version (same as `App`'s `appVersionId`)
+* `createAt`: The create date of the version (same as `App`'s `appVersionCreatedAt`)
+* `updateAt`: The update date of the version (same as `App`'s `appVersionUpdatedAt`)
+
+#### Fetch Screens and Flows by Version
+
+The default fetch methods assume fetching the latest version, but you can control which version you want to fetch by passing the specific `Version`.
+
+```swift
+let flows = try await api.getiOSFlows(by: Version(...))
+let screens = try await api.getiOSScreens(by: Version(...))
+```
