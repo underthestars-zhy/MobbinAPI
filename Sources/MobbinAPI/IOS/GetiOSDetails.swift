@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 extension MobbinAPI {
-    public func getiOSScreens(of app: App) async throws -> [Screen] {
+    public func getiOSScreens(by version: Version) async throws -> [Screen] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_app_screens_filter") else { throw HTTPError.wrongUrlFormat }
@@ -45,7 +45,7 @@ extension MobbinAPI {
         // JSON Body
 
         let bodyObject: [String : Any] = [
-            "filterAppVersionId": app.appVersionId,
+            "filterAppVersionId": version.id,
             "filterOperator": "and",
             "filterScreenElements": NSNull(),
             "filterScreenPatterns": NSNull(),
@@ -83,7 +83,11 @@ extension MobbinAPI {
         } ?? []
     }
 
-    public func getiOSFlows(of app: App) async throws -> [Flow] {
+    public func getiOSScreens(of app: App) async throws -> [Screen] {
+         try await getiOSScreens(by: Version(id: app.appVersionId, createdAt: app.appVersionCreatedAt, publishedAt: app.appVersionPublishedAt))
+    }
+
+    public func getiOSFlows(by version: Version) async throws -> [Flow] {
         guard let token else { throw MobbinError.cannotFindToken }
 
         guard var URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/rest/v1/rpc/get_app_sections_filter") else { throw HTTPError.wrongUrlFormat }
@@ -120,7 +124,7 @@ extension MobbinAPI {
         // JSON Body
 
         let bodyObject: [String : Any] = [
-            "filterAppVersionId": app.appVersionId,
+            "filterAppVersionId": version.id,
             "filterOperator": "and",
             "filterFlowTitles": NSNull(),
             "filterScreenPatterns": NSNull(),
@@ -168,5 +172,9 @@ extension MobbinAPI {
 
             return Flow(id: id, name: name, actions: actions, parentAppSectionId: parentAppSectionId, order: order, updatedAt: updatedAt, appVersionId: appVersionId, screens: screens)
         } ?? []
+    }
+
+    public func getiOSFlows(of app: App) async throws -> [Flow] {
+        try await getiOSFlows(by: Version(id: app.appVersionId, createdAt: app.appVersionCreatedAt, publishedAt: app.appVersionPublishedAt))
     }
 }

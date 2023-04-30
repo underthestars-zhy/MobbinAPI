@@ -8,7 +8,7 @@
 import Foundation
 
 extension MobbinAPI {
-    func versions(of app: App, mobbinToken: String? = nil) async throws -> [Version] {
+    public func versions(of app: App, mobbinToken: String? = nil) async throws -> [Version] {
         let json = try await mobbinAppInfo(of: app, mobbinToken: mobbinToken)
 
         return try json["pageProps"]["app"]["appVersions"].array?.map({ json in

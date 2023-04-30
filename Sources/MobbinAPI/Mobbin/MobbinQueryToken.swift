@@ -8,7 +8,7 @@
 import Foundation
 
 extension MobbinAPI {
-    func getMobbinQueryToken() async throws -> String {
+    public func getMobbinQueryToken() async throws -> String {
         guard let URL = URL(string: "https://mobbin.com/") else { throw MobbinError.cannotFindToken }
         var request = URLRequest(url: URL)
         request.httpMethod = "GET"

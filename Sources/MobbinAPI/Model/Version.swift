@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Version {
+public struct Version {
     let id: String
     let createdAt: Date
     let publishedAt: Date
