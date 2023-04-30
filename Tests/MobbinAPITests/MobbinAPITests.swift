@@ -49,6 +49,16 @@ final class MobbinAPITests: XCTestCase {
         XCTAssertEqual(screens.count, 155)
     }
 
+    func testGetiOSDownloadURL() async throws {
+        let api = MobbinAPI(email: "zhuhaoyu0909@icloud.com", token: Token(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgyODY2MDg4LCJzdWIiOiJkMmI0MTU5MC01M2E0LTRjNGQtOWQ5NC0wNmY1ZDcxODA3YzMiLCJlbWFpbCI6InpodWhhb3l1MDkwOUBpY2xvdWQuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly91amFzbnRrZnBoeXdpenNkYWFwaS5zdXBhYmFzZS5jby9zdG9yYWdlL3YxL29iamVjdC9wdWJsaWMvdXNlci91c2VyX2F2YXRhcnMvYTcyZTgwNjQtZjdlYi00YjBhLTg0MWMtMzlhM2ExMGRmY2E0LmpwZWciLCJmdWxsX25hbWUiOiJVVFN6aHkifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2ODI3Nzk2ODh9XSwic2Vzc2lvbl9pZCI6IjlhMGUwNzQwLTZhZGItNGJlMy1hNGFmLWQ5MDE0Y2FmNDYyZiJ9.nWNXx2FMjtzbEx7Ddr9LKC2v2NrP7Jbd2_b8tymkGho", refreshToken: ""))
+
+        let apps = try await api.queryNextPage(nil)
+
+        let url = try await api.downloadURL(of: apps[0])
+
+        print(url)
+    }
+
     func testGetiOSFlows() async throws {
         let api = MobbinAPI(email: "zhuhaoyu0909@icloud.com", token: Token(accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjgyNzc3MTQ0LCJzdWIiOiJkMmI0MTU5MC01M2E0LTRjNGQtOWQ5NC0wNmY1ZDcxODA3YzMiLCJlbWFpbCI6InpodWhhb3l1MDkwOUBpY2xvdWQuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly91amFzbnRrZnBoeXdpenNkYWFwaS5zdXBhYmFzZS5jby9zdG9yYWdlL3YxL29iamVjdC9wdWJsaWMvdXNlci91c2VyX2F2YXRhcnMvYTcyZTgwNjQtZjdlYi00YjBhLTg0MWMtMzlhM2ExMGRmY2E0LmpwZWciLCJmdWxsX25hbWUiOiJVVFN6aHkifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2ODI1MjE1OTR9XSwic2Vzc2lvbl9pZCI6ImNjMzI3ZDMzLWVkODAtNDM1Mi05NTRlLTI5OWZiNzQ1YmM5ZiJ9.s4eXeIaY9OBKT_-TxAPeWtnivxdRO1yM9K7gT68jAac", refreshToken: ""))
 
