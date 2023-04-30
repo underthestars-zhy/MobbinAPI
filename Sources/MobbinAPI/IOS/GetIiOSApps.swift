@@ -12,7 +12,7 @@ extension MobbinAPI {
     public func getAlliOSApps() async throws -> [App] {
         guard let token else { throw MobbinError.cannotFindToken }
 
-        var lastAppPublishedDate: Date? = nil
+        var lastApp: App? = nil
 
         var res = [App]()
 
@@ -51,12 +51,12 @@ extension MobbinAPI {
                 "filterAppCompanyStages": NSNull(),
                 "filterAppPlatform": "ios",
                 "filterOperator": "and",
-                "lastAppVersionUpdatedAt": NSNull(),
+                "lastAppVersionUpdatedAt": lastApp?.appVersionUpdatedAt.mobbin ?? NSNull(),
                 "filterAppStyles": NSNull(),
                 "filterAppRegions": NSNull(),
                 "pageSize": 24,
-                "lastAppId": NSNull(),
-                "lastAppVersionPublishedAt": lastAppPublishedDate?.mobbin ?? NSNull()
+                "lastAppId": lastApp?.id ?? NSNull(),
+                "lastAppVersionPublishedAt": lastApp?.appVersionPublishedAt.mobbin ?? NSNull()
             ]
             request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])
 
@@ -107,9 +107,7 @@ extension MobbinAPI {
                 break
             }
             res += apps
-            if let date = apps.last?.appVersionPublishedAt {
-                lastAppPublishedDate = date
-            }
+            lastApp = apps.last
         }
 
         return res
@@ -152,11 +150,11 @@ extension MobbinAPI {
             "filterAppCompanyStages": NSNull(),
             "filterAppPlatform": "ios",
             "filterOperator": "and",
-            "lastAppVersionUpdatedAt": NSNull(),
+            "lastAppVersionUpdatedAt": app?.appVersionUpdatedAt.mobbin ?? NSNull(),
             "filterAppStyles": NSNull(),
             "filterAppRegions": NSNull(),
             "pageSize": 24,
-            "lastAppId": NSNull(),
+            "lastAppId": app?.id ?? NSNull(),
             "lastAppVersionPublishedAt": app?.appVersionPublishedAt.mobbin ?? NSNull()
         ]
         request.httpBody = try! JSONSerialization.data(withJSONObject: bodyObject, options: [])

@@ -13,4 +13,5 @@ public enum MobbinError: Error {
     case cannotFindUserInfo
     case wrongURL(String)
     case wrongDate(String)
+    case cannotFindMobbinQueryToken
 }

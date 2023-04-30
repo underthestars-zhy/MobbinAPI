@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "MobbinAPI",
     platforms: [
-        .iOS(.v13),
-        .macOS(.v12)
+        .iOS(.v16),
+        .macOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
