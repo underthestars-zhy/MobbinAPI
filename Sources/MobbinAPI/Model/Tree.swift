@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum Tree<Item> {
+public enum Tree<Item> {
     case children(Item, [Self])
 }

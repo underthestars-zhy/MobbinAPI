@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Version {
-    let id: String
-    let createdAt: Date
-    let publishedAt: Date
+    public let id: String
+    public let createdAt: Date
+    public let publishedAt: Date
 }

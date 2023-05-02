@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Workspace {
-    let name: String
-    let id: String
-    let type: String
+    public let name: String
+    public let id: String
+    public let type: String
 }

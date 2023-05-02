@@ -8,15 +8,15 @@
 import Foundation
 
 public struct UserInfo: Codable {
-    let id: String
-    let aud: String
-    let role: String
-    let email: String
-    let emailConfirmedAt: Date
-    let recoverySentAt: Date
-    let lastSignInAt: Date
-    let avatarUrl: URL
-    let fullName: String
+    public let id: String
+    public let aud: String
+    public let role: String
+    public let email: String
+    public let emailConfirmedAt: Date
+    public let recoverySentAt: Date
+    public let lastSignInAt: Date
+    public let avatarUrl: URL
+    public let fullName: String
 
     public init(id: String, aud: String, role: String, email: String, emailConfirmedAt: Date, recoverySentAt: Date, lastSignInAt: Date, avatarUrl: URL, fullName: String) {
         self.id = id

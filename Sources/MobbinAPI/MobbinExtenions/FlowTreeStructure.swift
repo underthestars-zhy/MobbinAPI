@@ -8,7 +8,7 @@
 import Foundation
 
 extension MobbinAPI {
-    func generateTreeSturctureFlow(from flows: [Flow], parent: String? = nil) -> [Tree<Flow>] {
+    public func generateTreeSturctureFlow(from flows: [Flow], parent: String? = nil) -> [Tree<Flow>] {
         let topLevelFlows = flows.filter {
             $0.parentAppSectionId == parent
         }
