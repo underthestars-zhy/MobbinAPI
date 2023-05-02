@@ -50,7 +50,7 @@ extension MobbinAPI {
         return try JSONDecoder().decode(Bool.self, from: data)
     }
 
-    func sendEmail() async throws {
+    public func sendEmail() async throws {
         guard try await !shoudUsePassword() else { throw MobbinError.emailProblem }
 
         guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/auth/v1/otp") else { throw HTTPError.wrongUrlFormat }
@@ -90,7 +90,7 @@ extension MobbinAPI {
         }
     }
 
-    func verify(code: String) async throws -> Bool {
+    public func verify(code: String) async throws -> Bool {
         guard let URL = URL(string: "https://ujasntkfphywizsdaapi.supabase.co/auth/v1/verify") else { throw HTTPError.wrongUrlFormat }
         var request = URLRequest(url: URL)
         request.httpMethod = "POST"
