@@ -16,4 +16,14 @@ public class MobbinAPI {
         self.userInfo = userInfo
         self.token = token
     }
+
+    public func retriveToken() throws -> Token {
+        guard let token else { throw MobbinError.noTokenFounded }
+        return token
+    }
+
+    public func retriveUserInfo() throws -> UserInfo {
+        guard let userInfo else { throw MobbinError.noUserInfoFounded }
+        return userInfo
+    }
 }

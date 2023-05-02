@@ -69,7 +69,7 @@ public struct Token: Codable {
 }
 
 extension MobbinAPI {
-    func refreshToken() async throws {
+    public func refreshToken() async throws {
         try await self.token?.refresh()
     }
 }
