@@ -17,12 +17,12 @@ public class MobbinAPI {
         self.token = token
     }
 
-    public func retriveToken() throws -> Token {
+    public func retrieveToken() throws -> Token {
         guard let token else { throw MobbinError.noTokenFounded }
         return token
     }
 
-    public func retriveUserInfo() throws -> UserInfo {
+    public func retrieveUserInfo() throws -> UserInfo {
         guard let userInfo else { throw MobbinError.noUserInfoFounded }
         return userInfo
     }
